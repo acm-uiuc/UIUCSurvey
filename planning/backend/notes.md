@@ -7,6 +7,7 @@ Node.js with MongoDB
 # Potentially Helpful Links
 - [NodeJS and Express](http://blog.modulus.io/nodejs-and-express-create-rest-api)
 - [NodeJS, Express, Mongo](http://www.codemag.com/Article/1210041)
+- [Node Restify](http://mcavage.me/node-restify/)
 
 # Routes
 
