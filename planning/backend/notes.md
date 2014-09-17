@@ -8,6 +8,7 @@ Node.js with MongoDB
 - [NodeJS and Express](http://blog.modulus.io/nodejs-and-express-create-rest-api)
 - [NodeJS, Express, Mongo](http://www.codemag.com/Article/1210041)
 - [Node Restify](http://mcavage.me/node-restify/)
+- [Building a RESTful API with Express](http://scotch.io/tutorials/javascript/build-a-restful-api-using-node-and-express-4)
 
 # Routes
 
