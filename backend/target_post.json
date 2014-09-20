@@ -1,0 +1,27 @@
+{
+    "name": "Hello Survey",
+    "author": "1dhfkje45x",
+    "price": 100,
+    "questions": [
+        {
+            "title": "What color are your eyes?",
+            "response_type": "radio",
+            "radio_enum": [
+                "Blue",
+                "Green",
+                "Other"
+            ]
+        },
+        {
+            "title": "Dogs or Cats?",
+            "response_type": "radio",
+            "radio_enum": [
+                "Dogs",
+                "Cats",
+                "Other"
+            ]
+        }
+
+    ]
+
+}
