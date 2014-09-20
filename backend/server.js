@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var crypto     = require('crypto');
 var User       = require('./user_model.js');
 var Survey     = require('./survey_model.js');
+var request = require('request');
 
 // This should not be random. It will be constant in any real situation
 var SALT = 'dev'; //crypto.randomBytes(256);
@@ -13,6 +14,8 @@ mongoose.connect('mongodb://localhost:27017/node_auth'); // connect to our datab
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.set('views', __dirname + '/views')
+app.set('view engine', 'jade');
 
 var router = express.Router();  
 
@@ -21,20 +24,22 @@ router.use(function(req, res, next){
     var hash = req.query.hash;
     console.log(req.url);
     // Everything is secret except for / and /register
-    if(baseUrl == '/' || baseUrl == '/register'){
+    if(baseUrl == '/' || 
+        baseUrl == '/register' ||
+        baseUrl == '/public'){
         next();
         return;
     }
 
     if(hash == undefined){
-        res.redirect('/api/');
+        res.redirect('/api/public');
         return;
     }
     // TODO: Check to make sure hash is in database
     var query = User.where({ hash:hash });
     query.findOne(function(err, user){
         if(err || user == null){
-            res.redirect('/api/register');
+            res.redirect('/api/public');
             return;
         }
         console.log("Hash found");
@@ -43,7 +48,11 @@ router.use(function(req, res, next){
 });
 
 router.get('/', function (req, res) {
-      res.send('Welcome to the public area.');
+    res.render('login');
+});
+
+router.get('/public', function (req, res) {
+    res.send("Hello World! This is the public area.");
 });
 
 router.get('/secret', function(req, res){
@@ -56,7 +65,7 @@ router.get('/checkForSurveys', function (req, res){
     var query = User.where({hash:hash, pendingSurvey: {$exists: true}});
     query.findOne(function (err, user){
         if(err || user == null){
-            res.send(500);
+            res.send("None");
             return;
         }
         // User has a survery waiting
@@ -87,51 +96,64 @@ router.get('/collectedData', function (req, res){
     });
 });
 
-router.get('/register', function (req, res) {
-    var email = req.query.email;
+router.post('/register', function (req, res) {
+    console.log("Register called");
+    var url = 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + req.body.access_token;
+    request(url, function (error, response, body){
+        body = JSON.parse(body);
+        console.log(body.email);
 
-    // Client should send email
-    if(email == undefined || 
-        !validateEmailStr(email)){
-        res.send(401);
-    }else{
-        validateRegisteredEmail(email, function(result){
-            if(result){
-                res.send(401);
+        if(body.email == undefined || !validateEmailStr(body.email)){
+            res.redirect("/api/public");
+            return;
+        }
+
+        validateRegisteredEmail(body.email, function(result){
+            if(result != false){
+                console.log(result);
+                res.json({hash:result});
                 return;
             }
 
             var sha512 = crypto.createHash("sha512");
-            var hash = sha512.update(SALT + req.query.email).digest('hex');
-            var d = {email:req.query.email, hash:hash}; 
+            var hash = sha512.update(SALT + body.email).digest('hex');
+            var d = {email:body.email, hash:hash, google_user_id:body.id, name:body.name}; 
             var user = new User();
             user.email = d.email;
             user.hash = d.hash;
+            user.google_id = d.google_user_id;
+            user.name = d.name;
             user.collected = {
                 "registration_date": new Date().toJSON()
             };
             user.save(function(err){
                 if(err) res.send(err);
+                console.log(d);
                 res.json(d);
             });
 
         }, false);
-    }
+
+    });
+
 });
 
 app.use('/api', router);
 
 function validateEmailStr(email){
     // TODO: change to illinois.edu
+    console.log("Checking email: " + email);
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    return re.test(email);// && email.indexOf("illinois.edu") > -1;
 }
 
 function validateRegisteredEmail(email, callback, checkstr) { 
     if(checkstr && !validateEmailStr(email)) callback(false);
     var query = User.where({ email:email });
     query.findOne(function (err, user){
-        callback(!err && user != null);
+        if(err && user == null)
+            callback(false);
+        else callback(user.hash);
     });
 } 
 

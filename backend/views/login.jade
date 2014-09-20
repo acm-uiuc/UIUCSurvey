@@ -1,0 +1,26 @@
+html
+    head
+        script(type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js")
+        script.
+            (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/client:plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+            })();
+            function signinCallback(authResult) {
+                console.log(authResult);
+                if (authResult['status']['signed_in']) {
+                    document.getElementById('signinButton').setAttribute('style', 'display: none');
+                    $.post("/api/register", {access_token:authResult['access_token'], user_id:authResult['client_id']}).done(function(result){
+                        console.log(result);
+                        window.location.href="/api/secret?hash=" + result.hash;
+                    });
+                }else{
+                    console.log('Sign-in state: ' + authResult['error']);
+                }
+            }
+    body
+        span#signinButton
+            span.g-signin(data-callback="signinCallback" data-clientid="816014903182-1sbk197uvp15k3jc2thbfjb158fso6te.apps.googleusercontent.com" data-cookiepolicy="single_host_origin" data-requestvisibleactions="http://schema.org/AddAction" data-scope="https://www.googleapis.com/auth/plus.login")
+        div#results
+

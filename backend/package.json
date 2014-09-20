@@ -6,7 +6,10 @@
         "body-parser": "~1.0.1",
         "mongoose": "3.8.x",
         "node-uuid": "*",
-        "sha512": "*"
+        "sha512": "*",
+        "jade": "*",
+        "request": "*",
+        "googleapis": "*"
     }
 }
 
