@@ -5,7 +5,7 @@
 3. Start the MongoDB server <pre>mongod</pre>
 4. Access the server <pre>mongo</pre>
 5. Create a database <pre>use node_auth</pre>
-6. Quit <pre>quit</pre>
+6. Quit <pre>quit()</pre>
 7. Navigate to this directory
 8. Install Dependencies <pre>npm install</pre>
 9. Run Node server <pre>node server.js</pre>
