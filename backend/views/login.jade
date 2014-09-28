@@ -13,7 +13,7 @@ html
                     document.getElementById('signinButton').setAttribute('style', 'display: none');
                     $.post("/api/register", {access_token:authResult['access_token'], user_id:authResult['client_id'], id_token:authResult['id_token']}).done(function(result){
                         console.log(result);
-                        //window.location.href="/api/secret?hash=" + result.hash;
+                        window.location.href="/api/secret?hash=" + result.hash;
                     });
                 }else{
                     console.log('Sign-in state: ' + authResult['error']);
