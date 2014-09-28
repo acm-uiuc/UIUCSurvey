@@ -120,7 +120,7 @@ router.post('/register', function (req, res) {
 
             var sha512 = crypto.createHash("sha512");
             var hash = sha512.update(SALT + body.email).digest('hex');
-            var d = {email:body.email, hash:hash, google_user_id:body.id, name:body.name}; 
+            var d = {email:body.email, hash:hash, google_user_id:body.user_id, name:body.name}; 
             var user = new User();
             user.email = d.email;
             user.hash = d.hash;
@@ -154,7 +154,7 @@ function validateRegisteredEmail(email, callback, checkstr) {
     if(checkstr && !validateEmailStr(email)) callback(false);
     var query = User.where({ email:email });
     query.findOne(function (err, user){
-        if(err && user == null)
+        if(err || user == null)
             callback(false);
         else callback(user.hash);
     });
