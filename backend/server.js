@@ -98,9 +98,12 @@ router.get('/collectedData', function (req, res){
 
 router.post('/register', function (req, res) {
     console.log("Register called");
-    var url = 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + req.body.access_token;
+    var url = 'https://www.googleapis.com/oauth2/v1/tokeninfo?id_token=' + req.body.id_token;
+    console.log(url);
     request(url, function (error, response, body){
+        console.log(body);
         body = JSON.parse(body);
+        console.log(body);
         console.log(body.email);
 
         if(body.email == undefined || !validateEmailStr(body.email)){
