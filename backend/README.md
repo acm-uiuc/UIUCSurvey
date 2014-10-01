@@ -11,3 +11,12 @@
 9. Run Node server <pre>node server.js</pre>
 10. (Optional) - [PostMaster Chrome Extension](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
 11. Make Requests.
+
+#Helpful Learning Tools
+
+1. Tutorial: [Building a RESTful Api in Node.js and Express ](http://scotch.io/tutorials/javascript/build-a-restful-api-using-node-and-express-4)
+2. Tutorial: [Mongo Shell in a Browser](http://try.mongodb.org/)
+3. Docs: [Mongo Driver for Node JS](http://docs.mongodb.org/ecosystem/drivers/node-js/)
+4. Book: [MongoDB](http://it-ebooks.info/book/2333/)
+5. Book: [Node Applications w/ Mongo](http://it-ebooks.info/book/1362/)
+6. Book: [Web Development w/ Node & Express](http://it-ebooks.info/book/3597/)
