@@ -35,7 +35,7 @@ router.use(function(req, res, next){
         res.redirect('/api/public');
         return;
     }
-    // TODO: Check to make sure hash is in database
+
     var query = User.where({ hash:hash });
     query.findOne(function(err, user){
         if(err || user == null){
@@ -56,7 +56,16 @@ router.get('/public', function (req, res) {
 });
 
 router.get('/secret', function(req, res){
-    res.send('Welcome to the secret area.');
+    var hash = req.query.hash; // This should eventually be taken out of GET
+    var query = User.where({hash:hash});
+    query.findOne(function(err, user){
+        if(err || user == null){
+            res.redirect('/api/public');
+            return;
+        }
+        var email = user.email;
+        res.render('secret', {email:email});
+    });
 });
 
 router.get('/checkForSurveys', function (req, res){
@@ -147,7 +156,7 @@ function validateEmailStr(email){
     // TODO: change to illinois.edu
     console.log("Checking email: " + email);
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);// && email.indexOf("illinois.edu") > -1;
+    return re.test(email) && email.indexOf("illinois.edu") > -1;
 }
 
 function validateRegisteredEmail(email, callback, checkstr) { 
