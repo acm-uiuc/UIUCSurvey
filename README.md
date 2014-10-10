@@ -1,1 +1,2 @@
-UIUC Survey App for SIGSOFT
+#UIUC Survey App
+GitHub Repo for the UIUC Survey app being created in SIGSoft
