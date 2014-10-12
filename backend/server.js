@@ -71,7 +71,6 @@ router.get('/secret', function(req, res){
 
 router.get('/checkForSurveys', function (req, res){
     var hash = req.query.hash;
-    pendingSurvery: {$exists: true}
     var query = User.where({hash:hash, pendingSurvey: {$exists: true}});
     query.findOne(function (err, user){
         if(err || user == null){
@@ -80,7 +79,7 @@ router.get('/checkForSurveys', function (req, res){
         }
         // User has a survery waiting
         // Pull up survey
-        
+
         var query2 = Survey.where({_id:user.pendingSurvey});
         query2.findOne(function (err, survey){
             console.log(survey);
@@ -90,9 +89,36 @@ router.get('/checkForSurveys', function (req, res){
 });
 
 router.post('/surveyResponse', function (req, res){
-    // TODO
-    console.log(req.body);
-    res.send(req.body);
+    try{
+        var hash = req.query.hash; // This should eventually be taken out of GET
+        var query = User.where({hash:hash});
+        query.findOne(function(err, user){
+            if(err || user == null){
+                callback(false);
+                res.redirect('/api/public');
+                return;
+            }
+            var response = JSON.parse(req.body.response);
+            // TODO add reponse to survey statistics
+            // Change user attributes
+            if(response.attributes_update.length > 0){
+                for(var i = 0; i < response.attributes_update.length; ++i){
+                    var data = response.attributes_update[i];
+                    user.collected[data.attribute] = data.data;
+                }
+                user.markModified('collected');
+                user.save(function(err){
+                    if(err){ 
+                        res.send(500);
+                        return;
+                    }
+                    res.send(200);
+                });
+            }
+        });
+    }catch(e){
+        res.send(500);
+    }
 });
 
 router.get('/collectedData', function (req, res){
@@ -111,7 +137,7 @@ router.post('/makeSurvey', function(req, res) {
         var question_data = JSON.parse(req.body.question_data);
         var target = JSON.parse(req.body.target);
         var survey = new Survey();
-        
+
         var d = {name:req.body.name, author:req.body.author, price:req.body.price, question_data:question_data, target:target};
         survey.name = d.name;
         survey.created = new Date().toJSON(); //todo: when to expire
@@ -189,10 +215,23 @@ function validateRegisteredEmail(email, callback, checkstr) {
     var query = User.where({ email:email });
     query.findOne(function (err, user){
         if(err || user == null)
-            callback(false);
+        callback(false);
         else callback(user.hash);
     });
 } 
+
+function getUser(req, res, callback){
+    var hash = req.query.hash; // This should eventually be taken out of GET
+    var query = User.where({hash:hash});
+    query.findOne(function(err, user){
+        if(err || user == null){
+            callback(false);
+            res.redirect('/api/public');
+            return;
+        }
+        callback(user);
+    });
+}
 
 var port = process.env.PORT || 3000; 
 
