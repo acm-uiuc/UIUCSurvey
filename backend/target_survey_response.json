@@ -1,4 +1,5 @@
 {
-    "survey_id": "12341234lkj123l4kj1",
-    "responses": [0,2]
+    "survey_id": "asdf1234",
+    "responses": ["72","iPhone"],
+    "attributes_update":[{"phone_type":"iPhone"}]
 }
