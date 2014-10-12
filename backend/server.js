@@ -26,7 +26,8 @@ router.use(function(req, res, next){
     // Everything is secret except for / and /register
     if(baseUrl == '/' || 
         baseUrl == '/register' ||
-        baseUrl == '/public'){
+        baseUrl == '/public' ||
+        baseUrl == '/makeSurvey'){
         next();
         return;
     }
@@ -94,6 +95,25 @@ router.get('/collectedData', function (req, res){
         }
         res.send(user.collected);
     });
+});
+
+router.post('/makeSurvey', function(req, res) {
+    try{
+        var body = JSON.parse(req.body.survey);
+    } catch (e) {
+        console.log("couldn't parse JSON!");
+    }
+    var survey = new Survey();
+    var d = {name:body.name, author:body.author, price:body.price};
+    survey.name = d.name;
+    survey.created = new Date().toJSON(); //todo: when to expire
+    survey.author = d.author;
+    survey.price = d.price;
+
+    survey.save(function(err){
+        if(err) res.send(err);
+    });
+
 });
 
 router.post('/register', function (req, res) {
