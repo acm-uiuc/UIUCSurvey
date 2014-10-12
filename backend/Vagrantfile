@@ -1,0 +1,49 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+# Install dependencies
+$install = <<SCRIPT
+apt-get update -qq
+apt-get -yq install git python-software-properties python g++ make
+add-apt-repository ppa:chris-lea/node.js
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+apt-get update -q
+apt-get install -y nodejs
+apt-get install -y mongodb-org
+mkdir /data/db
+SCRIPT
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "trusty"
+  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+  #config.vm.provision "file", source: "config", destination: "config"
+  config.vm.provision "shell", inline: $install
+  #config.vm.provision "shell", path: "provision.sh", privileged: "true"
+
+
+  # 1.) Will not work after provision script is ran because of new kernel lacking guest additions
+  config.vm.network "forwarded_port", guest: 80,    host: 80
+  config.vm.network "forwarded_port", guest: 8080,  host: 8080
+  config.vm.network "forwarded_port", guest: 443,   host: 443
+  config.vm.network "forwarded_port", guest: 27017, host: 27017
+  config.vm.network "forwarded_port", guest: 80,    host: 8080
+
+  # config.vm.synced_folder ".", "/vagrant"
+  # 2.) Will work becuase guest additions isn't a requirement
+  # config.vm.synced_folder ".", "/vagrant", type: "rsync",
+  # rsync__exclude: ".git/"
+  # rsync_auto: "true" # Detect and copy any changes automatically
+
+   config.vm.provider "virtualbox" do |vb|
+      #vb.gui = true
+      vb.name = "uiucsurvey"
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
+      vb.customize ["modifyvm", :id, "--cpus", 1]
+   end
+
+end
