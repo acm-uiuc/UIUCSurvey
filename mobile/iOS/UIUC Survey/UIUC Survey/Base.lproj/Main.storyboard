@@ -96,7 +96,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="6uq-Q5-TAl" kind="show" id="fPR-Qt-TwO"/>
+                                            <segue destination="zyy-f7-dMH" kind="show" id="MdY-tS-zEm"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="G3D-QT-rfM" detailTextLabel="Xjn-Cl-YBT" style="IBUITableViewCellStyleSubtitle" id="RDW-pZ-VuW">
@@ -118,9 +118,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="6uq-Q5-TAl" kind="show" id="BQX-XB-Gxs"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -135,13 +132,47 @@
             </objects>
             <point key="canvasLocation" x="1883" y="1016"/>
         </scene>
-        <!--Page View Controller-->
-        <scene sceneID="Jgd-dg-pSd">
+        <!--Table View Controller-->
+        <scene sceneID="9vJ-kX-q2c">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="6uq-Q5-TAl" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DpG-SY-no1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="zyy-f7-dMH" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="ELd-rw-hUQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="59b-GF-ncW">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="5Ty-uX-8z6">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Ty-uX-8z6" id="NNQ-5W-hv4">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="0J4-bY-A4q">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0J4-bY-A4q" id="YIf-H1-NEg">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="TWx-Pw-we6">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TWx-Pw-we6" id="7Bi-hA-eFd">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="zyy-f7-dMH" id="2Sh-AW-TSi"/>
+                            <outlet property="delegate" destination="zyy-f7-dMH" id="uv3-lw-5MC"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gWC-RJ-7I9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2593" y="1016"/>
+            <point key="canvasLocation" x="2615" y="1012"/>
         </scene>
         <!--Settings-->
         <scene sceneID="9WV-dQ-Hk1">
@@ -197,7 +228,4 @@
     <resources>
         <image name="sliders_up_2.png" width="22" height="22"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="fPR-Qt-TwO"/>
-    </inferredMetricsTieBreakers>
 </document>
