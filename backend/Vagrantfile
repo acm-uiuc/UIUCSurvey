@@ -14,7 +14,7 @@ echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | 
 apt-get update -q
 apt-get install -y nodejs
 apt-get install -y mongodb-org
-mkdir /data/db
+mkdir -p /data/db
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
