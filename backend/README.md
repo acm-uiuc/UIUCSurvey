@@ -1,3 +1,13 @@
+# Design Specs
+
+JSON Survey Format
+Response Types:
+1. radio
+2. checkbox - (Respond with array of choices)
+3. dropdown
+4. shortanswer
+5. boolean
+
 # Setup Instructions
 
 1. Install [MongoDB](http://www.mongodb.org/)
