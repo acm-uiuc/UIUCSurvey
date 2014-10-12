@@ -36,7 +36,7 @@ router.use(function(req, res, next){
         res.redirect('/api/public');
         return;
     }
-    // TODO: Check to make sure hash is in database
+
     var query = User.where({ hash:hash });
     query.findOne(function(err, user){
         if(err || user == null){
@@ -57,7 +57,16 @@ router.get('/public', function (req, res) {
 });
 
 router.get('/secret', function(req, res){
-    res.send('Welcome to the secret area.');
+    var hash = req.query.hash; // This should eventually be taken out of GET
+    var query = User.where({hash:hash});
+    query.findOne(function(err, user){
+        if(err || user == null){
+            res.redirect('/api/public');
+            return;
+        }
+        var email = user.email;
+        res.render('secret', {email:email});
+    });
 });
 
 router.get('/checkForSurveys', function (req, res){
@@ -99,20 +108,25 @@ router.get('/collectedData', function (req, res){
 
 router.post('/makeSurvey', function(req, res) {
     try{
-        var body = JSON.parse(req.body.survey);
+        var question_data = JSON.parse(req.body.question_data);
+        var target = JSON.parse(req.body.target);
+        var survey = new Survey();
+        
+        var d = {name:req.body.name, author:req.body.author, price:req.body.price, question_data:question_data, target:target};
+        survey.name = d.name;
+        survey.created = new Date().toJSON(); //todo: when to expire
+        survey.author = d.author;
+        survey.price = d.price;
+        survey.question_data = d.question_data;
+        survey.target = d.target;
+
+        survey.save(function(err){
+            if(err) res.send(err);
+            res.send(200);
+        });
     } catch (e) {
         console.log("couldn't parse JSON!");
     }
-    var survey = new Survey();
-    var d = {name:body.name, author:body.author, price:body.price};
-    survey.name = d.name;
-    survey.created = new Date().toJSON(); //todo: when to expire
-    survey.author = d.author;
-    survey.price = d.price;
-
-    survey.save(function(err){
-        if(err) res.send(err);
-    });
 
 });
 
@@ -167,7 +181,7 @@ function validateEmailStr(email){
     // TODO: change to illinois.edu
     console.log("Checking email: " + email);
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);// && email.indexOf("illinois.edu") > -1;
+    return re.test(email) && email.indexOf("illinois.edu") > -1;
 }
 
 function validateRegisteredEmail(email, callback, checkstr) { 
