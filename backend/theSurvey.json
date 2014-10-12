@@ -9,7 +9,7 @@
 	"question_data":[
 		{
 			"title":"How tall are you",
-			"response_type":"drop-box",
+			"response_type":"dropdown",
 			"response":"72",
 			"attribute":false
 		},
@@ -20,7 +20,8 @@
 				"iPhone",
 				"Android"
 			],
-			"attribute":true
+			"attribute":true,
+      "attribute_name":"phone_type"
 		}
 	]
 	
