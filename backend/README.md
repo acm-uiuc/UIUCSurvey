@@ -2,6 +2,7 @@
 
 JSON Survey Format
 Response Types:
+
 1. radio
 2. checkbox - (Respond with array of choices)
 3. dropdown
