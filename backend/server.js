@@ -108,20 +108,25 @@ router.get('/collectedData', function (req, res){
 
 router.post('/makeSurvey', function(req, res) {
     try{
-        var body = JSON.parse(req.body.survey);
+        var question_data = JSON.parse(req.body.question_data);
+        var target = JSON.parse(req.body.target);
+        var survey = new Survey();
+        
+        var d = {name:req.body.name, author:req.body.author, price:req.body.price, question_data:question_data, target:target};
+        survey.name = d.name;
+        survey.created = new Date().toJSON(); //todo: when to expire
+        survey.author = d.author;
+        survey.price = d.price;
+        survey.question_data = d.question_data;
+        survey.target = d.target;
+
+        survey.save(function(err){
+            if(err) res.send(err);
+            res.send(200);
+        });
     } catch (e) {
         console.log("couldn't parse JSON!");
     }
-    var survey = new Survey();
-    var d = {name:body.name, author:body.author, price:body.price};
-    survey.name = d.name;
-    survey.created = new Date().toJSON(); //todo: when to expire
-    survey.author = d.author;
-    survey.price = d.price;
-
-    survey.save(function(err){
-        if(err) res.send(err);
-    });
 
 });
 

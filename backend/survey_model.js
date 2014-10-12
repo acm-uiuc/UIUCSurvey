@@ -7,7 +7,7 @@ var SurveySchema = new Schema({
     price: Number,
     expiration: Date,
     target: {},
-    questions: []
+    question_data: []
 });
 
 module.exports = mongoose.model('Survey', SurveySchema);
