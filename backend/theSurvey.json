@@ -1,0 +1,27 @@
+{
+	"name": "Test Survey",
+	"num_questions":"2",
+	"created": 1413086379,
+	"author": "Dima",
+	"price": 100000000000000000,
+	"expiration": 1413086380,
+	"target":{},
+	"question_data":[
+		{
+			"title":"How tall are you",
+			"response_type":"drop-box",
+			"response":"72",
+			"attribute":false
+		},
+		{
+			"title":"Phone",
+			"response_type":"radio",
+			"choices":[
+				"iPhone",
+				"Android"
+			],
+			"attribute":true
+		}
+	]
+	
+}
