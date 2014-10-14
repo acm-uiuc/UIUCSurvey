@@ -1,0 +1,18 @@
+html
+    head
+        script(src="https://code.jquery.com/jquery-2.1.1.min.js")
+        script(type="text/javascript").
+            $(document).ready(function(){
+                $('#submit').click(function(){
+                    var s = $('#input').val();
+                    $.post("makeSurvey", {surveyProposal:s});
+                });
+            });
+
+    body
+        div Submit a Survey Here
+        h1 Question Data
+        textarea#input
+        br
+        button#submit Submit
+

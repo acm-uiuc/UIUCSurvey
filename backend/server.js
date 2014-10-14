@@ -27,6 +27,7 @@ router.use(function(req, res, next){
     if(baseUrl == '/' || 
         baseUrl == '/register' ||
         baseUrl == '/public' ||
+        baseUrl == '/ui_makeSurvey' || // Only for testing
         baseUrl == '/makeSurvey'){
         next();
         return;
@@ -100,6 +101,7 @@ router.post('/surveyResponse', function (req, res){
             }
             var response = JSON.parse(req.body.response);
             // TODO add reponse to survey statistics
+
             // Change user attributes
             if(response.attributes_update.length > 0){
                 for(var i = 0; i < response.attributes_update.length; ++i){
@@ -132,19 +134,21 @@ router.get('/collectedData', function (req, res){
     });
 });
 
+router.get('/ui_makeSurvey', function(req, res){
+    res.render('submit_survey');
+});
+
 router.post('/makeSurvey', function(req, res) {
     try{
-        var question_data = JSON.parse(req.body.question_data);
-        var target = JSON.parse(req.body.target);
+        var surveyProposal = JSON.parse(req.body.surveyProposal);
         var survey = new Survey();
 
-        var d = {name:req.body.name, author:req.body.author, price:req.body.price, question_data:question_data, target:target};
-        survey.name = d.name;
+        survey.name = surveyProposal.name;
         survey.created = new Date().toJSON(); //todo: when to expire
-        survey.author = d.author;
-        survey.price = d.price;
-        survey.question_data = d.question_data;
-        survey.target = d.target;
+        survey.author = surveyProposal.author;
+        survey.price = surveyProposal.price;
+        survey.question_data = surveyProposal.question_data;
+        survey.target = surveyProposal.target;
 
         survey.save(function(err){
             if(err) res.send(err);
