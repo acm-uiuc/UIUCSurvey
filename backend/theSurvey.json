@@ -6,7 +6,7 @@
     "author": "Dima",
     "price": 100000000000000000,
     "expiration": 1413086380,
-    "target":{},
+    "target":false,
     "question_data":[
         {
             "title":"How tall are you",
