@@ -149,6 +149,7 @@ router.post('/makeSurvey', function(req, res) {
         survey.price = surveyProposal.price;
         survey.question_data = surveyProposal.question_data;
         survey.target = surveyProposal.target;
+        survey.distributed = false;
 
         survey.save(function(err){
             if(err) res.send(err);

@@ -7,6 +7,7 @@ var UserSchema = new Schema({
     google_id: String,
     name: String,
     collected: {},
+    surveys_taken: [],
     pendingSurvey: Schema.Types.ObjectId
 });
 
