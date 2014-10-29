@@ -7,6 +7,8 @@
   <title> UIUC Survey </title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="UIUC_Survey.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.19/angular.min.js"></script>
+  <script src="angular.js"></script>
 
 
 
@@ -29,7 +31,7 @@
     </form>
      <form action="">
           Expiration Data of Survey:
-          <input type="date" name="bday">
+          <input id="exper" type="date" name="bday">
     </form>
      
 
@@ -40,17 +42,23 @@
           <script>
                   function myFunction() {
                               
-                              var survey = {};
+                              var survey = {};  //create survey object
 
-                              survey.name = document.getElementById('name').value;
-                              survey.created = new Date().toJSON();
+                              survey.name = document.getElementById('name').value;            //assign values for required values 
+                              survey.created = 0000;                                          //based on HTML forms
                               survey.author = document.getElementById('author').value;
                               survey.price = document.getElementById('price').value;
+                              survey.expiration = document.getElementById('exper').value; 
+                              survey.target = false; 
                               
-                              console.log("Name of Survey: " + survey.name); 
+                              console.log("Name of Survey: " + survey.name);                  //print out JSON attributes
                               console.log("Date Created: " + "right now dude...Live in the Moment"); 
                               console.log("Author of Survey: " + survey.author); 
                               console.log("Price: " + survey.price); 
+                              console.log("Expiration: " + survey.expiration);
+                              console.log("Target: " + survey.target);
+
+                              console.log("\n");
 
                   }
           </script>
