@@ -1,24 +1,85 @@
+body{
+	background-color: #FFFFFF;
+}
+
 h1{
 	text-align:center; 
 }
 
+h2{
+	font-size: 4em;
+	font-family: 'Trebuchet MS';
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+
+
 #banner {
-	width: 500px; 
-	height: 200px; 
-	margin-top: 100px;
+	width: 1275px; 
+	height: 472px; 
 	margin-left: auto;
 	margin-right: auto;
-	
-	/*background-image: url("a.png");
+	background-image: url("a.png");
+	background-position: 0px 50px; 
     background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;*/
+    background-size: 1275px 422px;
+    background-attachment: fixed;
 }	
-body{
-	background-color: #EEEEEE;
 
+
+#signIn{
+	width: 700px;
+	height: 422px;
+	margin-left: auto;
+	margin-right: auto;
+	padding:auto;
+	padding-top: 60px;
 }
+
+#banner2 {
+	width: 1275px; 
+	height: 600px; 
+	margin-left: auto;
+	margin-right: auto;
+	background-image: url("b.jpeg");
+	background-position: 0px 50px; 
+    background-repeat: no-repeat;
+    background-size: 1275px 761px;
+    background-attachment: fixed;
+    padding-top: 0px;
+}	
+
+#banner3 {
+	width: 1275px; 
+	height: 600px; 
+	margin-left: auto;
+	margin-right: auto;
+	background-image: url("c.jpg");
+	background-position: 0px 50px; 
+    background-repeat: no-repeat;
+    background-size: 1275px 786px;
+    background-attachment: fixed;
+    padding-top: 0px;
+}	
+
+
+.transbox {
+    width: 100%;
+    height: auto;
+	margin: auto;
+    padding: 30px 200px;
+    background-color: black;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    font-family: 'Verdana';
+    font-weight: normal;
+    color: white;
+    text-align: left;
+}
+
+
 #nav{
-background-color: #EEEEEE;
+	background-color: #FFFFFF;
 
 }
