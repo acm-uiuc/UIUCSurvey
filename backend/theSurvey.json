@@ -7,7 +7,7 @@
     "price": 100000000000000000,
     "expiration": 1413086380,
     "target":false,
-    "distributed": false,
+    "distribute": 50,
     "question_data":[
         {
             "title":"How tall are you",
