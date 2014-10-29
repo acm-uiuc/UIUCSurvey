@@ -12,7 +12,6 @@ surveys_to_handle = db.surveys.find({"distributed" : False})
 def distribute_survey_all( survey, number_of_recipients ):
     print "Survey _id: %s" % survey['_id']
     users = db.users.find({"pendingSurvey": {"$exists" : False}, "surveys_taken" : {"$ne" : survey['_id']}})
-# TODO Make sure user hasn't already taken this survey
     count = users.count()
     print "Found %s qualified users" % count
 
@@ -28,7 +27,7 @@ def distribute_survey_all( survey, number_of_recipients ):
 
     # Check if done distributing
     if allocated == number_of_recipients:
-        survey.update({"distributed" : True})
+        survey.update({"distributed" : 0})
         db.surveys.save(survey)
 
 for survey in surveys_to_handle:

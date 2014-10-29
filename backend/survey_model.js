@@ -7,7 +7,7 @@ var SurveySchema = new Schema({
     price: Number,
     expiration: Date,
     target: {},
-    distributed: Boolean,
+    distributed: Number,
     question_data: []
 });
 
